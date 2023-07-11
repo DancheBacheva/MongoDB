@@ -19,7 +19,11 @@ mongoose.connect("mongodb+srv://danchebacheva:5B1keENwdr50XhWm@cluster0.hpujfqj.
 
 app.post("/books", bookController.createBook);
 app.get("/books", bookController.getAllBooks);
+app.get("/books/:id", bookController.getBook);
+app.patch("/books/:id", bookController.updateBook);
+app.delete("/books/:id", bookController.deleteBook)
 
 app.listen(10000, (err)=>{
+  if(err) return console.log(err);
   console.log("The application is running")
 });
