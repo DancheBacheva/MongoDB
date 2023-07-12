@@ -14,7 +14,14 @@ exports.createBook = async (req, res) => {
 
 exports.getAllBooks = async (req, res) => {
   try{
-    const books = await Book.find();
+    const queryObj = {...req.query};
+    let queryString = JSON.stringify(queryObj);
+    queryString = queryString.replace(
+      /\b(gte|gt|lte|lt)\b/g,
+      (match) => `$${match}`
+    );
+    const query = JSON.parse(queryString);
+    const books = await Book.find(query);
     res.send(books);
   }catch(err){
     res.status(404).json({
